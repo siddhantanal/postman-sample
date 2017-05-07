@@ -1,37 +1,80 @@
 <html>
 
-<head> </head>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+</head>
 
-<body>
+<body ng-app="App" ng-controller="Cart_Controller">
+    <h1> All Products </h1>
     <table>
-        <% for(var i=0; i < productList.length; i++) { %>
-            <tr>
-                <td>
-                    <%= productList[i].name %>
-                </td>
-                <td>
-                    <%= productList[i].price %>
-                </td>
-                <td>
-                    <a href="#" class="add-to-cart" id="<%= i %>">Add to cart</a>
-                </td>
-            </tr>
-            <% } %>
+        <tr ng-repeat="item in productList">
+            <td> {{ item.name }} </td>
+            <td> {{ item.price }} </td>
+            <td> <a href="#" class="add-to-cart" ng-click="addToCart(item,$index)">Add to cart</a> </td>
+        </tr>
     </table>
-    <form action="/inititatePayment" method="POST">
-  <script
-    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-    data-key="pk_test_EFauhL4VIeoeTDQUBdETeCmj"
-    data-amount="999"
-    data-name="Demo Site"
-    data-description="Widget"
-    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-    data-locale="auto">
-  </script>
-        <button type="submit">BUY</button>
-</form>
+    <br>
+    <br>
+    <hr>
+    <h1> Cart </h1>
+    <table>
+        <tr ng-repeat="item in cart">
+            <td> {{ item.name }} </td>
+            <td> {{ item.price }} </td>
+            <td> <a href="#" class="add-to-cart" ng-click="remove(item,$index)">Remove</a> </td>
+        </tr>
+    </table>
+    <button type="button" ng-show="cart.length > 0" ng-click="proceedToBuy()">Proceed To Pay</button>
     <script>
-        
+        var app = angular.module('App', []);
+        app.controller('Cart_Controller', function ($http, $scope) {
+            $scope.value = "random";
+            $scope.cartObj = {};
+            $scope.cart = [];
+            $scope.productList = [
+                {
+                    name: "television"
+                    , price: 100
+                }
+                , {
+                    name: "AC"
+                    , price: 150
+                }
+                , {
+                    name: "laptop"
+                    , price: 200
+                }
+                , {
+                    name: "mobile"
+                    , price: 120
+                }
+            ];
+            $scope.addToCart = function (obj, index) {
+                $scope.cart.push(obj);
+                $scope.productList.splice(index, 1);
+            }
+            $scope.remove = function (obj, index) {
+                $scope.productList.push(obj);
+                $scope.cart.splice(index, 1);
+            }
+            $scope.proceedToBuy = function () {
+                var total = 0;
+                angular.forEach($scope.cart, function (key, value) {
+                    total = total + key.price;
+                });
+                if (confirm("Total amount : " + total + ". Proceed?")) {
+                    $scope.cartObj.products = $scope.cart;
+                    $scope.cartObj.total = total;
+                    $http({
+                        method: 'POST'
+                        , url: "/proceedToPay"
+                        , data: $scope.cartObj
+                    }).then(function (success) {
+                        window.location.href = 'payment/' + success.data.token
+                    }, function (error) {});
+                }
+            }
+        });
     </script>
 </body>
 

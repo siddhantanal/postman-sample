@@ -1,11 +1,45 @@
-<form action="/your-server-side-code" method="POST">
-  <script
-    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-    data-key="pk_test_EFauhL4VIeoeTDQUBdETeCmj"
-    data-amount="999"
-    data-name="Demo Site"
-    data-description="Widget"
-    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-    data-locale="auto">
-  </script>
-</form>
+<html>
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+</head>
+
+<body ><!--ng-app="App" ng-controller="Payment_Controller" ng-init="orderSumnmay()" ng-cloak>-->
+    <h1>Order Summary</h1>
+    <table>
+        <thead>
+            <td> Sr no.</td>
+            <td> Name</td>
+            <td> Price</td>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in summary">
+                <td>{{ $index }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.price }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <h2> Total : {{ total }}</h2>
+    <form action="/your-server-side-code" method="POST">
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="pk_test_EFauhL4VIeoeTDQUBdETeCmj" data-name="Demo Site" data-description="Widget" data-image="https://stripe.com/img/documentation/checkout/marketplace.png" data-locale="auto">
+        </script>
+    </form>
+   <!-- <script>
+        var app = angular.module('App', []);
+        app.controller('Payment_Controller', function ($http, $scope) {
+            $scope.orderSumnmay = function()
+            {
+                 $http({
+                        method: 'POST'
+                        , url: "/proceedToPay"
+                        , data: $scope.cartObj
+                    }).then(function (success) {
+                        window.location.href = 'payment/' + success.data.token
+                    }, function (error) {});
+            }
+        });
+    </script>-->
+</body>
+
+</html>

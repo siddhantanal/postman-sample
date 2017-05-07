@@ -41,7 +41,10 @@ module.exports.routes = {
     'get /profile' : 'ShopController.functionTwo',
     'get /logout' : 'LoginController.functionThree',
     'get /products' : 'ShopController.functionFour',
+    'get /payment/:token' : 'PaymentController.functionSeven',
     'post /inititatePayment' : 'PaymentController.functionFive',
+    'post /proceedToPay' : 'ShopController.functionSix',
+    'get /orderDetail/:token' : 'PaymentController.functionEight',
     
 
   /***************************************************************************

@@ -27,7 +27,8 @@ module.exports.policies = {
   ***************************************************************************/
 
   // '*': true,
-    'shop': 'sessionAuth'
+    'shop': 'sessionAuth',
+    'payment': 'sessionAuth',
   /***************************************************************************
   *                                                                          *
   * Here's an example of mapping some policies to run before a controller    *

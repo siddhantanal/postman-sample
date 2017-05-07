@@ -1,11 +1,12 @@
 /**
- * User.js
+ * UserProduct.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
 
 module.exports = {
+
 connection: 'someMysqlServer',
   attributes: {
       id : {
@@ -13,14 +14,14 @@ connection: 'someMysqlServer',
           autoIncrement : true,
           primaryKey: true
       },
-      google_id : {
+      order_id : {
+          type : 'integer'
+      },
+      product_name : {
           type : 'string'
       },
-      name : {
-          type : 'string'
-      },
-      image_url : {
-          type : 'string'
+      product_price : {
+          type : 'integer'
       }
   }
 };

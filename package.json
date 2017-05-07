@@ -21,7 +21,8 @@
     "include-all": "^1.0.0",
     "rc": "1.0.1",
     "sails": "~0.12.13",
-    "sails-disk": "~0.10.9"
+    "sails-disk": "~0.10.9",
+    "sails-mysql": "^0.11.5"
   },
   "scripts": {
     "debug": "node debug app.js",
@@ -33,5 +34,10 @@
     "url": "git://github.com/rootzero/postman-sample.git"
   },
   "author": "rootzero",
-  "license": ""
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rootzero/postman-sample/issues"
+  },
+  "homepage": "https://github.com/rootzero/postman-sample#readme",
+  "devDependencies": {}
 }

@@ -29,6 +29,17 @@ module.exports = {
            res.json({
           success:'yes'
       }));
+    },
+    functionSeven : function(req,res){
+        var token = req.param('token');
+        Order.query("SELECT `order`.`id` as , `userproduct`.`product_name`, `userproduct`.`product_price`, `order`.`total_amount` FROM `order` LEFT JOIN `userproduct` ON `userproduct`.`order_id` = `order`.`id` WHERE `order`.`token` = '$1'", [token], function(err, result){
+            console.log(result);
+            console.log(err);
+            res.view('payment',{cartList : result})
+        });
+    },
+    functionEight : function(req,res){
+        
     }
 };
 

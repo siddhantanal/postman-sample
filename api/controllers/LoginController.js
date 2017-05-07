@@ -27,7 +27,7 @@ module.exports = {
             //session["tokens"]=tokens;
             req.session.token = tokens;
             req.session.save();
-            res.view('home');
+            res.redirect('/profile');
           }
           else{
               res.redirect('/login');
