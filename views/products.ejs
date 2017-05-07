@@ -1,0 +1,38 @@
+<html>
+
+<head> </head>
+
+<body>
+    <table>
+        <% for(var i=0; i < productList.length; i++) { %>
+            <tr>
+                <td>
+                    <%= productList[i].name %>
+                </td>
+                <td>
+                    <%= productList[i].price %>
+                </td>
+                <td>
+                    <a href="#" class="add-to-cart" id="<%= i %>">Add to cart</a>
+                </td>
+            </tr>
+            <% } %>
+    </table>
+    <form action="/inititatePayment" method="POST">
+  <script
+    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    data-key="pk_test_EFauhL4VIeoeTDQUBdETeCmj"
+    data-amount="999"
+    data-name="Demo Site"
+    data-description="Widget"
+    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+    data-locale="auto">
+  </script>
+        <button type="submit">BUY</button>
+</form>
+    <script>
+        
+    </script>
+</body>
+
+</html>
