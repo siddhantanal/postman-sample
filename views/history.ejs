@@ -3,5 +3,23 @@
     </head>
     <body>
         <h1>Purchase History </h1>
+        <table>
+        <thead>
+            <td> Order no.</td>
+            <td> Total Amount</td>
+            <td> Created At</td>
+            <td> Show Products </td>
+        </thead>
+        <tbody>
+            <% for(var i =0 ; i<purchaseHistory.length ; i++){ %>
+            <tr>
+                <td><%= purchaseHistory[i].id %></td>
+                <td><%= purchaseHistory[i].total_amount %></td>
+                <td><%= purchaseHistory[i].createdAt %></td>
+                <td> <a href="#">Details</a></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
     </body>
 </html>

@@ -113,9 +113,15 @@ module.exports = {
     functionNine : function(req,res){
         //get purchase history
         Order.find().where({
-            user_id : req.session.user_id
-        })
-        res.view('history');
+                user_id : req.session.user_id
+            }).where({
+                status : 'complete'
+            }).exec(function(err,obj){
+            console.log(err);
+            console.log(obj);
+            res.view('history',{ purchaseHistory : obj});
+        });
+        
     }
 };
 
