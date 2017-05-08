@@ -44,8 +44,12 @@ module.exports.routes = {
     'get /payment/:token' : 'PaymentController.functionSeven',
     'post /inititatePayment' : 'PaymentController.functionFive',
     'post /proceedToPay' : 'ShopController.functionSix',
-    'get /orderDetail/:token' : 'PaymentController.functionEight',
+    'get /orderDetail/:id' : 'ShopController.functionEight',
     'get /purchaseHistory' : 'ShopController.functionNine',
+    '/history' : {
+        view : 'history'
+    },
+    'get /generateRecipt/:token' : 'PaymentController.functionTen',
 
   /***************************************************************************
   *                                                                          *

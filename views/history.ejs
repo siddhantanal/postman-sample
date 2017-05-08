@@ -1,7 +1,9 @@
 <html>
-    <head>
-    </head>
-    <body>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+</head>
+
+    <body ng-app="App" ng-controller="History_Controller" ng-init="getUserHistory()">
         <h1>Purchase History </h1>
         <table>
         <thead>
@@ -11,15 +13,70 @@
             <td> Show Products </td>
         </thead>
         <tbody>
-            <% for(var i =0 ; i<purchaseHistory.length ; i++){ %>
+          <!--  < for(var i =0 ; i<purchaseHistory.length ; i++){ %>
             <tr>
-                <td><%= purchaseHistory[i].id %></td>
-                <td><%= purchaseHistory[i].total_amount %></td>
-                <td><%= purchaseHistory[i].createdAt %></td>
+                <td><= purchaseHistory[i].id %></td>
+                <td><= purchaseHistory[i].total_amount %></td>
+                <td><= purchaseHistory[i].createdAt %></td>
                 <td> <a href="#">Details</a></td>
             </tr>
-            <% } %>
+            < } %>-->
+            <tr ng-repeat="item in purchases">
+                <td>{{ item.id }}</td>
+                <td>{{ item.total_amount }}</td>
+                <td>{{ item.createdAt }}</td>
+                <td> <a href="#" ng-click="getOrderDetail(item)">Details</a></td>
+            </tr>
         </tbody>
     </table>
+        <br />
+        <hr />
+        <div ng-show="showDet">
+            <h1>Order Detail</h1>
+            <table>
+        <thead>
+            <td> Sr no.</td>
+            <td> Name</td>
+            <td> Price</td>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in orderDetail">
+                <td>{{ $index+1 }}</td>
+                <td>{{ item.product_name }}</td>
+                <td>{{ item.product_price }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <h2> Total : {{ total }}</h2>
+        </div>
+        <script>
+        var app = angular.module('App', []);
+        app.controller('History_Controller', function ($http, $scope) {
+            $scope.value = "random";
+            $scope.showDet = false;
+            $scope.purchases = [];
+            $scope.getUserHistory = function()
+            {
+                $http({
+                        method: 'GET'
+                        , url: "/purchaseHistory"
+                    }).then(function (success) {
+                        $scope.purchases = success.data.purchaseHistory;
+                    }, function (error) {});
+            }
+            $scope.getOrderDetail = function(obj)
+            {
+                $http({
+                        method: 'GET'
+                        , url: "/orderDetail/"+obj.id
+                    }).then(function (success) {
+                        //$scope.purchases = success.data.purchaseHistory;
+                        $scope.orderDetail = success.data.cartList;
+                        $scope.total = success.data.total;
+                        $scope.showDet = true;
+                    }, function (error) {});
+            }
+        });
+        </script>
     </body>
 </html>

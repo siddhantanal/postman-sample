@@ -20,23 +20,23 @@ module.exports = {
                     resolve(response || err);
                 });
             }).then(function (data) {
-                User.findOrCreate({google_id:data.id}, {name:data.displayName,
+                User.findOrCreate({google_id:data.id}, {
+                    name:data.displayName,
                     image_url : data.image.url,
                     google_id : data.id
-                     },function(err,user){
-                   if(!err)
-                       {
-                           console.log(user);
-                            req.session.email = data.emails[0].value;
-                            req.session.user_id = user.id;
-                            req.session.save();
-                           res.view('profile', {
-                                name:data.displayName,
-                                image_url : data.image.url,
-                                id : data.id,
-                               email : data.emails[0].value
-                            });
-                       }
+                },function(err,user){
+                    if(!err)
+                    {
+                        req.session.email = data.emails[0].value;
+                        req.session.user_id = user.id;
+                        req.session.save();
+                        res.view('profile', {
+                            name:data.displayName,
+                            image_url : data.image.url,
+                            id : data.id,
+                            email : data.emails[0].value
+                        });
+                    }
                     else
                     {
                         res.json({err:"yes"});
@@ -51,24 +51,6 @@ module.exports = {
         }
     },
     functionFour : function(req,res){
-        var products = [
-            {
-                name : "television",
-                price : 100
-            },
-            {
-                name : "AC",
-                price : 150
-            },
-            {
-                name : "laptop",
-                price : 200
-            },
-            {
-                name : "mobile",
-                price : 120
-            }
-        ]
         res.view('products');//, { productList : products })
     },
     functionSix : function(req,res){
@@ -90,14 +72,14 @@ module.exports = {
                         product_name : item.name,
                         product_price : item.price
                     }).exec(function(err,obj){
-                           if(!err)
-                               {
-                                   return resolve(obj);
-                               }
-                           else
-                               {
-                                   return reject(err);
-                               }
+                       if(!err)
+                       {
+                           return resolve(obj);
+                       }
+                       else
+                       {
+                           return reject(err);
+                       }
                     })
                    });
                 })).then(function(data){
@@ -110,6 +92,15 @@ module.exports = {
         });
         
     },
+    functionEight : function(req,res){
+        var id = req.param('id');
+        Order.query("SELECT `order`.`id`, `userproduct`.`product_name`, `userproduct`.`product_price`, `order`.`total_amount` FROM `order` LEFT JOIN `userproduct` ON `userproduct`.`order_id` = `order`.`id` WHERE `order`.`id` = ?", [id], function(err, result){
+            if(!err)
+            {
+              res.json({cartList : result, total : result[0].total_amount});
+            }
+        });
+    },
     functionNine : function(req,res){
         //get purchase history
         Order.find().where({
@@ -117,9 +108,9 @@ module.exports = {
             }).where({
                 status : 'complete'
             }).exec(function(err,obj){
-            console.log(err);
-            console.log(obj);
-            res.view('history',{ purchaseHistory : obj});
+                console.log(err);
+                console.log(obj);
+                res.json({ purchaseHistory : obj});
         });
         
     }
