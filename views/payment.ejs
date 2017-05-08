@@ -13,16 +13,18 @@
             <td> Price</td>
         </thead>
         <tbody>
-            <tr ng-repeat="item in summary">
-                <td>{{ $index }}</td>
-                <td>{{ item.name }}</td>
-                <td>{{ item.price }}</td>
+            <% for(var i =0 ; i<cartList.length ; i++){ %>
+            <tr>
+                <td><%= i+1 %></td>
+                <td><%= cartList[i].product_name %></td>
+                <td><%= cartList[i].product_price %></td>
             </tr>
+            <% } %>
         </tbody>
     </table>
-    <h2> Total : {{ total }}</h2>
+    <h2> Total : <%= total %></h2>
     <form action="/your-server-side-code" method="POST">
-        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="pk_test_EFauhL4VIeoeTDQUBdETeCmj" data-name="Demo Site" data-description="Widget" data-image="https://stripe.com/img/documentation/checkout/marketplace.png" data-locale="auto">
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="pk_test_EFauhL4VIeoeTDQUBdETeCmj" data-name="Demo Site" data-description="Widget" data-image="https://stripe.com/img/documentation/checkout/marketplace.png" data-locale="auto" data-amount="<%= total*100 %>">
         </script>
     </form>
    <!-- <script>

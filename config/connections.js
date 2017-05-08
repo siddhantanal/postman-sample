@@ -45,8 +45,8 @@ module.exports.connections = {
      host: 'localhost',
      port : 3306,
      user: 'root', //optional
-     password: 'pass', //optional
-     database: 'test' //optional
+     password: '', //optional
+     database: 'postman' //optional
    },
 
   /***************************************************************************

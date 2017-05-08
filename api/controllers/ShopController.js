@@ -109,6 +109,13 @@ module.exports = {
            } 
         });
         
+    },
+    functionNine : function(req,res){
+        //get purchase history
+        Order.find().where({
+            user_id : req.session.user_id
+        })
+        res.view('history');
     }
 };
 
