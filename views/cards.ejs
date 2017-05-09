@@ -1,0 +1,32 @@
+<html>
+    <head></head>
+    <body>
+        <div >
+        <h1>Card List </h1>
+        <table>
+        <thead>
+            <td> Sr no.</td>
+            <td> Name/Tag</td>
+            <td> Card number</td>
+        </thead>
+        <tbody>
+            <% for(var i =0 ; i<cardList.length ; i++){ %>
+            <tr>
+                <td><%= i+1 %></td>
+                <td><%= cardList[i].name %></td>
+                <td><%= cardList[i].card_number %></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+    <br />
+    <hr />
+        </div>
+    <h1>Add a new card</h1>
+    <form action="/addNewCard" method="POST">
+        <input type="text" name="name" placeholder="Name/Tag" required>
+        <input type="text" name="card_number" placeholder="Card Number" required>
+        <input type="submit" name="submit" value="submit">
+    </form>
+    </body>
+</html>

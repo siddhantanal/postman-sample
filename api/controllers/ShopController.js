@@ -6,6 +6,10 @@
  */
 var google = require('googleapis');
 var plus = google.plus('v1');
+const keyPublishable = 'pk_test_EFauhL4VIeoeTDQUBdETeCmj';
+const keySecret = 'sk_test_hTeniJlmahot2gL2vBTNmEox';
+
+const stripe = require("stripe")(keySecret);
 
 module.exports = {
 	functionTwo : function(req,res){
@@ -29,12 +33,14 @@ module.exports = {
                     {
                         req.session.email = data.emails[0].value;
                         req.session.user_id = user.id;
+                        req.session.wallet = user.credits;
                         req.session.save();
                         res.view('profile', {
                             name:data.displayName,
                             image_url : data.image.url,
                             id : data.id,
-                            email : data.emails[0].value
+                            email : data.emails[0].value,
+                            wallet : user.credits
                         });
                     }
                     else
@@ -113,6 +119,54 @@ module.exports = {
                 res.json({ purchaseHistory : obj});
         });
         
+    },
+    functionEleven : function(req,res){
+        //add to wallet function
+        var amount = req.body.credits;
+        if(amount > 0)
+        {
+            stripe.customers.create({
+                email: req.body.stripeEmail,
+                source: req.body.stripeToken
+                })
+                .then(customer =>
+                stripe.charges.create({
+                    amount,
+                    description: "Sample Charge",
+                        currency: "usd",
+                        customer: customer.id
+                }))
+                .then(function(charge){ 
+                    var credits = parseInt(req.session.wallet) + parseInt(amount);
+                    User.update({id:req.session.user_id},{credits: credits}).exec(function(err,obj){
+                        if(!err){
+                            res.redirect('/profile');
+                        }
+                    });
+            });
+        }
+    },
+    functionTwelve : function(req,res){
+        Cards.find().where({
+                user_id : req.session.user_id
+            }).exec(function(err,obj){
+                console.log(err);
+                console.log(obj);
+                if(!err){
+                    res.view('cards', { cardList : obj});
+                }
+        });
+    },
+    functionThirteen : function(req,res){
+        Cards.create({
+            user_id : req.session.user_id,
+            name : req.body.name,
+            card_number : req.body.card_number
+        }).exec(function(err,obj){
+            if(!err){
+                res.redirect('/cards');
+            }
+        });
     }
 };
 

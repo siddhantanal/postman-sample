@@ -16,15 +16,17 @@
     <br>
     <br>
     <hr>
-    <h1> Cart </h1>
-    <table>
-        <tr ng-repeat="item in cart">
-            <td> {{ item.name }} </td>
-            <td> {{ item.price }} </td>
-            <td> <a href="#" class="add-to-cart" ng-click="remove(item,$index)">Remove</a> </td>
-        </tr>
-    </table>
-    <button type="button" ng-show="cart.length > 0" ng-click="proceedToBuy()">Proceed To Pay</button>
+    <div ng-show="cart.length > 0">
+        <h1> Cart </h1>
+        <table>
+            <tr ng-repeat="item in cart">
+                <td> {{ item.name }} </td>
+                <td> {{ item.price }} </td>
+                <td> <a href="#" class="add-to-cart" ng-click="remove(item,$index)">Remove</a> </td>
+            </tr>
+        </table>
+        <button type="button" ng-show="cart.length > 0" ng-click="proceedToBuy()">Proceed To Pay</button>
+    </div>
     <script>
         var app = angular.module('App', []);
         app.controller('Cart_Controller', function ($http, $scope) {

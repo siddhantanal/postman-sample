@@ -1,5 +1,5 @@
 /**
- * User.js
+ * Cards.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
@@ -13,18 +13,14 @@ connection: 'someMysqlServer',
           autoIncrement : true,
           primaryKey: true
       },
-      google_id : {
-          type : 'string'
+      user_id : {
+          type : 'integer'
       },
       name : {
           type : 'string'
       },
-      image_url : {
+      card_number : {
           type : 'string'
-      },
-      credits : {
-          type : 'integer',
-          defaultsTo : 0
       }
   }
 };

@@ -49,6 +49,13 @@ module.exports.routes = {
     '/history' : {
         view : 'history'
     },
+    '/wallet' : {
+        view : 'wallet'
+    },
+    'get /cards' : 'ShopController.functionTwelve',
+    'post /addToWallet' : 'ShopController.functionEleven',
+    'post /addNewCard' : 'ShopController.functionThirteen',
+    'post /walletPayment' : 'PaymentController.functionFourteen',
     'get /generateRecipt/:token' : 'PaymentController.functionTen',
 
   /***************************************************************************

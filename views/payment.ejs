@@ -21,12 +21,22 @@
             <% } %>
         </tbody>
     </table>
-    <h2> Total : <%= total %></h2>
+    <h3> Total : <%= total %></h3>
+    <h4> Wallet : <%= credits %>
+    <h2>Grand Total (to be payed) : <%= toBePayed %></h2>
+    <h3> Credits Left <%= creditLeft %></h3>
+    <% if(payFromWallet){ %>
+        <form action="/walletPayment" method="POST">
+         <input name="token" value="<%= token %>" type="hidden">
+         <input type="submit" name="submit" value="Pay From Wallet">
+        </form>
+    <% }else{ %>
     <form action="/inititatePayment" method="POST">
-        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="pk_test_EFauhL4VIeoeTDQUBdETeCmj" data-name="Demo Site" data-description="Widget" data-image="https://stripe.com/img/documentation/checkout/marketplace.png" data-locale="auto" data-amount="<%= total*100 %>">
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="pk_test_EFauhL4VIeoeTDQUBdETeCmj" data-name="Demo Site" data-description="Widget" data-image="https://stripe.com/img/documentation/checkout/marketplace.png" data-locale="auto" data-amount="<%= toBePayed*100 %>">
         </script>
         <input name="token" value="<%= token %>" type="hidden">
     </form>
+    <% } %>
 </body>
 
 </html>
