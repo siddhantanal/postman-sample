@@ -1,0 +1,18 @@
+
+        table{
+            border: 1px solid #111;
+        }
+        td{
+            padding:10px;
+              border: 1px solid #111;
+            
+        }
+         th{
+            padding:10px;
+               border: 1px solid #111;
+        }
+        button{
+            margin-top: 10px;
+            margin-left:30px;
+            
+        }

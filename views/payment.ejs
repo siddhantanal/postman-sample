@@ -1,17 +1,18 @@
 <html>
 
 <head>
+    <link href="styles/style.css" rel="stylesheet">
 </head>
 
 <body ><!--ng-app="App" ng-controller="Payment_Controller" ng-init="orderSumnmay()" ng-cloak>-->
     <h1>Order Summary</h1>
     <table>
-        <thead>
-            <td> Sr no.</td>
-            <td> Name</td>
-            <td> Price</td>
-        </thead>
-        <tbody>
+        <tr>
+            <th> Sr no.</th>
+            <th> Name</th>
+            <th> Price</th>
+        </tr>
+       
             <% for(var i =0 ; i<cartList.length ; i++){ %>
             <tr>
                 <td><%= i+1 %></td>
@@ -19,7 +20,6 @@
                 <td><%= cartList[i].product_price %></td>
             </tr>
             <% } %>
-        </tbody>
     </table>
     <h3> Total : <%= total %></h3>
     <h4> Wallet : <%= credits %>

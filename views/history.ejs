@@ -1,51 +1,41 @@
 <html>
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+    <link href="styles/style.css" rel="stylesheet">
 </head>
 
     <body ng-app="App" ng-controller="History_Controller" ng-init="getUserHistory()">
+        <a href="/profile">Back to profile</a>
         <h1>Purchase History </h1>
         <table>
-        <thead>
-            <td> Order no.</td>
-            <td> Total Amount</td>
-            <td> Created At</td>
-            <td> Show Products </td>
-        </thead>
-        <tbody>
-          <!--  < for(var i =0 ; i<purchaseHistory.length ; i++){ %>
-            <tr>
-                <td><= purchaseHistory[i].id %></td>
-                <td><= purchaseHistory[i].total_amount %></td>
-                <td><= purchaseHistory[i].createdAt %></td>
-                <td> <a href="#">Details</a></td>
-            </tr>
-            < } %>-->
+        <tr>
+            <th> Order no.</th>
+            <th> Total Amount</th>
+            <th> Created At</th>
+            <th> Show Products </th>
+        </tr>
             <tr ng-repeat="item in purchases">
                 <td>{{ item.id }}</td>
                 <td>{{ item.total_amount }}</td>
                 <td>{{ item.createdAt }}</td>
                 <td> <a href="#" ng-click="getOrderDetail(item)">Details</a></td>
             </tr>
-        </tbody>
     </table>
         <br />
         <hr />
         <div ng-show="showDet">
             <h1>Order Detail</h1>
             <table>
-        <thead>
-            <td> Sr no.</td>
-            <td> Name</td>
-            <td> Price</td>
-        </thead>
-        <tbody>
+        <tr>
+            <th> Sr no.</th>
+            <th> Name</th>
+            <th> Price</th>
+        </tr>
             <tr ng-repeat="item in orderDetail">
                 <td>{{ $index+1 }}</td>
                 <td>{{ item.product_name }}</td>
                 <td>{{ item.product_price }}</td>
             </tr>
-        </tbody>
     </table>
     <h2> Total : {{ total }}</h2>
         </div>

@@ -1,14 +1,15 @@
 <html>
-<head></head>
+<head>
+    <link href="styles/style.css" rel="stylesheet">
+    </head>
     <body>
         <h1>Recipt</h1>
          <table>
-        <thead>
-            <td> Sr no.</td>
-            <td> Name</td>
-            <td> Price</td>
-        </thead>
-        <tbody>
+        <tr>
+            <th> Sr no.</th>
+            <th> Name</th>
+            <th> Price</th>
+        </tr>
             <% for(var i =0 ; i<cartList.length ; i++){ %>
             <tr>
                 <td><%= i+1 %></td>
@@ -16,7 +17,6 @@
                 <td><%= cartList[i].product_price %></td>
             </tr>
             <% } %>
-        </tbody>
     </table>
     <h2> Total : <%= total %></h2>
         <h3>Payment Status : <%= status %></h3>

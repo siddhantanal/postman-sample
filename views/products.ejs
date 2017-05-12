@@ -2,15 +2,25 @@
 
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+    <link href="styles/style.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
 <body ng-app="App" ng-controller="Cart_Controller">
+    <a href="/profile">Back to profile</a>
     <h1> All Products </h1>
     <table>
+        <tr>
+            <th style="padding:10px;">S.no</th>
+            <th>Product name</th>
+            <th>Price</th>
+            <th>Add to cart</th>
+        </tr>
         <tr ng-repeat="item in productList">
+            <td>{{ $index+1 }}</td>
             <td> {{ item.name }} </td>
             <td> {{ item.price }} </td>
-            <td> <a href="#" class="add-to-cart" ng-click="addToCart(item,$index)">Add to cart</a> </td>
+            <td> <a href="#" class="add-to-cart" ng-click="addToCart(item,$index)"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a> </td>
         </tr>
     </table>
     <br>
@@ -19,10 +29,15 @@
     <div ng-show="cart.length > 0">
         <h1> Cart </h1>
         <table>
+            <tr>
+                <th>Product name</th>
+                <th>Price</th>
+                <th>Add to cart</th>
+            </tr>
             <tr ng-repeat="item in cart">
                 <td> {{ item.name }} </td>
                 <td> {{ item.price }} </td>
-                <td> <a href="#" class="add-to-cart" ng-click="remove(item,$index)">Remove</a> </td>
+                <td> <a href="#" class="add-to-cart" ng-click="remove(item,$index)"><i class="fa fa-trash" aria-hidden="true"></i></a> </td>
             </tr>
         </table>
         <button type="button" ng-show="cart.length > 0" ng-click="proceedToBuy()">Proceed To Pay</button>

@@ -1,15 +1,17 @@
 <html>
-    <head></head>
+    <head>
+            <link href="styles/style.css" rel="stylesheet">
+    </head>
     <body>
         <div >
         <h1>Card List </h1>
         <table>
-        <thead>
-            <td> Sr no.</td>
-            <td> Name/Tag</td>
-            <td> Card number</td>
-        </thead>
-        <tbody>
+            <tr>
+            <th> Sr no.</th>
+            <th> Name/Tag</th>
+            <th> Card number</th>
+                </tr>
+
             <% for(var i =0 ; i<cardList.length ; i++){ %>
             <tr>
                 <td><%= i+1 %></td>
@@ -17,7 +19,6 @@
                 <td><%= cardList[i].card_number %></td>
             </tr>
             <% } %>
-        </tbody>
     </table>
     <br />
     <hr />
