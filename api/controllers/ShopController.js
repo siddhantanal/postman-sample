@@ -45,9 +45,10 @@ module.exports = {
                             wallet : user.credits
                         });
                     }
-                    else
-                    {
-                        res.json({err:"yes"});
+                    else{
+                        res.view('error',{
+                            msg: "Error Occured, login error or profile cannot be loaded"
+                        });
                     }
                 });
                 
@@ -144,7 +145,17 @@ module.exports = {
                         if(!err){
                             res.redirect('/profile');
                         }
+                        else{
+                            res.view('error',{
+                                msg: "Error Occured, transaction incomplete"
+                            });
+                        }
                     });
+            });
+        }
+        else{
+            res.view('error',{
+                msg: "Error Occured, no amount entered"
             });
         }
     },
@@ -157,6 +168,11 @@ module.exports = {
                 if(!err){
                     res.view('cards', { cardList : obj});
                 }
+                else{
+                    res.view('error',{
+                        msg: "Cards not found"
+                    });
+                }
         });
     },
     functionThirteen : function(req,res){
@@ -167,6 +183,11 @@ module.exports = {
         }).exec(function(err,obj){
             if(!err){
                 res.redirect('/cards');
+            }
+            else{
+                res.view('error',{
+                    msg: "Error Occured, card cannot be saved"
+                });
             }
         });
     }
