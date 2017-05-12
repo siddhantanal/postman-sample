@@ -55,7 +55,7 @@ module.exports.routes = {
     'get /cards' : 'ShopController.functionTwelve',
     'post /addToWallet' : 'ShopController.functionEleven',
     'post /addNewCard' : 'ShopController.functionThirteen',
-    'post /walletPayment' : 'PaymentController.functionFourteen',
+    //'post /walletPayment' : 'PaymentController.functionFourteen',
     'get /generateRecipt/:token' : 'PaymentController.functionTen',
 
   /***************************************************************************

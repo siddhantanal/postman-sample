@@ -34,7 +34,9 @@ module.exports = {
                         req.session.email = data.emails[0].value;
                         req.session.user_id = user.id;
                         req.session.wallet = user.credits;
+                        req.session.stripe_id = user.stripe_customer_id;
                         req.session.save();
+                        console.log(user);
                         res.view('profile', {
                             name:data.displayName,
                             image_url : data.image.url,

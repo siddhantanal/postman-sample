@@ -4,7 +4,7 @@
     <link href="styles/style.css" rel="stylesheet">
 </head>
 
-<body ><!--ng-app="App" ng-controller="Payment_Controller" ng-init="orderSumnmay()" ng-cloak>-->
+<body >
     <h1>Order Summary</h1>
     <table>
         <tr>
@@ -26,7 +26,7 @@
     <h2>Grand Total (to be payed) : <%= toBePayed %></h2>
     <h3> Credits Left <%= creditLeft %></h3>
     <% if(payFromWallet){ %>
-        <form action="/walletPayment" method="POST">
+        <form action="/inititatePayment" method="POST">
          <input name="token" value="<%= token %>" type="hidden">
          <input type="submit" name="submit" value="Pay From Wallet">
         </form>

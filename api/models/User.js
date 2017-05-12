@@ -25,6 +25,9 @@ connection: 'someMysqlServer',
       credits : {
           type : 'integer',
           defaultsTo : 0
+      },
+      stripe_customer_id : {
+          type : 'string'
       }
   }
 };
