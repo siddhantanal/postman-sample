@@ -17,7 +17,7 @@ module.exports = {
         Order.find().where({
             token : req.body.token
         }).exec(function(err,obj){
-            if(!err){
+            if(!err && obj.length > 0 ){
                 var amount = obj[0].total_amount;
                 console.log(obj);
                 if(req.session.wallet > amount){
@@ -61,7 +61,7 @@ module.exports = {
                                             amount,
                                             description: "Sample Charge",
                                             currency: "usd",
-                                            customer: req.session.stripe_id
+                                            customer: customer.id
                                         }).then(function(charge){ 
                                             console.log("charge");
                                             console.log(charge);
@@ -139,7 +139,7 @@ module.exports = {
     functionSeven : function(req,res){
         var token = req.param('token');
         Order.query("SELECT `order`.`id`, `userproduct`.`product_name`, `userproduct`.`product_price`, `order`.`total_amount` FROM `order` LEFT JOIN `userproduct` ON `userproduct`.`order_id` = `order`.`id` WHERE `order`.`token` = ?", [token], function(err, result){
-            if(!err)
+            if(!err && result.length > 0)
             {
                 var payFromWallet = false;
                 var toBePayed = result[0].total_amount;
@@ -163,12 +163,17 @@ module.exports = {
                   creditLeft : creditLeft
                 });
             }
+            else{
+                res.view('error',{
+                    msg: "Token mismatch"
+                });
+            }
         });
     },
     functionTen : function(req,res){
         var token = req.param('token');
         Order.query("SELECT `order`.`id`, `userproduct`.`product_name`, `userproduct`.`product_price`, `order`.`total_amount`, `order`.`status` FROM `order` LEFT JOIN `userproduct` ON `userproduct`.`order_id` = `order`.`id` WHERE `order`.`token` = ?", [token], function(err, result){
-            if(!err)
+            if(!err && result.length > 0)
             {
               res.view('recipt',{cartList : result, total : result[0].total_amount, status:result[0].status});
             }
@@ -178,31 +183,6 @@ module.exports = {
                 });
             }
         });
-    },
-    // functionFourteen : function(req,res){
-
-    //     Order.find().where({
-    //         token : req.body.token
-    //     }).exec(function(err,obj){
-    //         if(!err){
-    //             var amount = obj[0].total_amount;
-    //             console.log(obj);
-    //             var credits = parseInt(req.session.wallet) - parseInt(amount);
-    //             //reduce credits
-    //             User.update({ id : req.session.user_id }, { credits : credits }).exec(function(err,obj){
-    //                 if(!err){
-    //                     req.session.wallet = credits;
-    //                     req.session.save();
-    //                     Order.update({token:req.body.token},{status:'complete'}).exec(function(err,obj){
-    //                         if(!err){
-    //                             res.redirect('/generateRecipt/'+req.body.token);
-    //                         }
-    //                     });
-    //                 }
-    //             });
-    //         }       
-    //     });
-        
-    // }
+    }
 };
 

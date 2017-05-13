@@ -29,7 +29,7 @@ module.exports = {
                     image_url : data.image.url,
                     google_id : data.id
                 },function(err,user){
-                    if(!err)
+                    if(!err && user.length > 0)
                     {
                         req.session.email = data.emails[0].value;
                         req.session.user_id = user.id;
@@ -104,9 +104,13 @@ module.exports = {
     functionEight : function(req,res){
         var id = req.param('id');
         Order.query("SELECT `order`.`id`, `userproduct`.`product_name`, `userproduct`.`product_price`, `order`.`total_amount` FROM `order` LEFT JOIN `userproduct` ON `userproduct`.`order_id` = `order`.`id` WHERE `order`.`id` = ?", [id], function(err, result){
-            if(!err)
-            {
-              res.json({cartList : result, total : result[0].total_amount});
+            if(!err && result.length > 0){
+                res.json({cartList : result, total : result[0].total_amount});
+            }
+            else{
+                res.view('error',{
+                    msg: "Token mismatch"
+                });
             }
         });
     },
