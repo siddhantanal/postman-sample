@@ -12,7 +12,7 @@ const keySecret = 'sk_test_hTeniJlmahot2gL2vBTNmEox';
 const stripe = require("stripe")(keySecret);
 
 module.exports = {
-	functionTwo : function(req,res){
+	getUserProfile : function(req,res){
         var oauth2Client = GoogleAuth.getOAuthClient();
         //console.log(req.session.token);
         if(req.session.token !== undefined)
@@ -29,7 +29,7 @@ module.exports = {
                     image_url : data.image.url,
                     google_id : data.id
                 },function(err,user){
-                    if(!err && user.length > 0)
+                    if(!err)
                     {
                         req.session.email = data.emails[0].value;
                         req.session.user_id = user.id;
@@ -46,6 +46,7 @@ module.exports = {
                         });
                     }
                     else{
+                        console.log(user.length);
                         res.view('error',{
                             msg: "Error Occured, login error or profile cannot be loaded"
                         });
@@ -59,10 +60,10 @@ module.exports = {
             res.redirect('/login');
         }
     },
-    functionFour : function(req,res){
+    viewProducts : function(req,res){
         res.view('products');//, { productList : products })
     },
-    functionSix : function(req,res){
+    generateOrderSummary : function(req,res){
         var token = Utility.randomString(20);
         var cartList = req.body.products;
         var orderID = "";
@@ -101,7 +102,7 @@ module.exports = {
         });
         
     },
-    functionEight : function(req,res){
+    getOrderDetail : function(req,res){
         var id = req.param('id');
         Order.query("SELECT `order`.`id`, `userproduct`.`product_name`, `userproduct`.`product_price`, `order`.`total_amount` FROM `order` LEFT JOIN `userproduct` ON `userproduct`.`order_id` = `order`.`id` WHERE `order`.`id` = ?", [id], function(err, result){
             if(!err && result.length > 0){
@@ -114,7 +115,7 @@ module.exports = {
             }
         });
     },
-    functionNine : function(req,res){
+    getUserPurchaseHistory : function(req,res){
         //get purchase history
         Order.find().where({
                 user_id : req.session.user_id
@@ -127,43 +128,7 @@ module.exports = {
         });
         
     },
-    functionEleven : function(req,res){
-        //add to wallet function
-        var amount = req.body.credits;
-        if(amount > 0)
-        {
-            stripe.customers.create({
-                email: req.body.stripeEmail,
-                source: req.body.stripeToken
-                })
-                .then(customer =>
-                stripe.charges.create({
-                    amount,
-                    description: "Sample Charge",
-                        currency: "usd",
-                        customer: customer.id
-                }))
-                .then(function(charge){ 
-                    var credits = parseInt(req.session.wallet) + parseInt(amount);
-                    User.update({id:req.session.user_id},{credits: credits}).exec(function(err,obj){
-                        if(!err){
-                            res.redirect('/profile');
-                        }
-                        else{
-                            res.view('error',{
-                                msg: "Error Occured, transaction incomplete"
-                            });
-                        }
-                    });
-            });
-        }
-        else{
-            res.view('error',{
-                msg: "Error Occured, no amount entered"
-            });
-        }
-    },
-    functionTwelve : function(req,res){
+    getUserSavedCards : function(req,res){
         Cards.find().where({
                 user_id : req.session.user_id
             }).exec(function(err,obj){
@@ -179,7 +144,7 @@ module.exports = {
                 }
         });
     },
-    functionThirteen : function(req,res){
+    addNewCard : function(req,res){
         Cards.create({
             user_id : req.session.user_id,
             name : req.body.name,

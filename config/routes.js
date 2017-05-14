@@ -36,27 +36,27 @@ module.exports.routes = {
     view: 'homepage'
     
   },
-    'get /login' : 'LoginController.functionOne',
+    'get /login' : 'LoginController.login',
     'get /auth/google/callback' : 'LoginController.functionGoogleCall',
-    'get /profile' : 'ShopController.functionTwo',
-    'get /logout' : 'LoginController.functionThree',
-    'get /products' : 'ShopController.functionFour',
-    'get /payment/:token' : 'PaymentController.functionSeven',
-    'post /inititatePayment' : 'PaymentController.functionFive',
-    'post /proceedToPay' : 'ShopController.functionSix',
-    'get /orderDetail/:id' : 'ShopController.functionEight',
-    'get /purchaseHistory' : 'ShopController.functionNine',
+    'get /profile' : 'ShopController.getUserProfile',
+    'get /logout' : 'LoginController.logoutUser',
+    'get /products' : 'ShopController.viewProducts',
+    'get /payment/:token' : 'PaymentController.getOrderSummary',
+    'post /inititatePayment' : 'PaymentController.inititatePayment',
+    'post /proceedToPay' : 'ShopController.generateOrderSummary',
+    'get /orderDetail/:id' : 'ShopController.getOrderDetail',
+    'get /purchaseHistory' : 'ShopController.getUserPurchaseHistory',
     '/history' : {
         view : 'history'
     },
     '/wallet' : {
         view : 'wallet'
     },
-    'get /cards' : 'ShopController.functionTwelve',
-    'post /addToWallet' : 'ShopController.functionEleven',
-    'post /addNewCard' : 'ShopController.functionThirteen',
+    'get /cards' : 'ShopController.getUserSavedCards',
+    'post /addToWallet' : 'PaymentController.paymentToWallet',
+    'post /addNewCard' : 'ShopController.addNewCard',
     //'post /walletPayment' : 'PaymentController.functionFourteen',
-    'get /generateRecipt/:token' : 'PaymentController.functionTen',
+    'get /generateRecipt/:token' : 'PaymentController.generateOrderRecipt',
 
   /***************************************************************************
   *                                                                          *

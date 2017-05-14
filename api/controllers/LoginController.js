@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-	functionOne : function(req,res){
+	login : function(req,res){
         if(req.session.token == undefined)
         {
             var url = GoogleAuth.getAuthUrl();
@@ -35,7 +35,7 @@ module.exports = {
         });
     },
     
-    functionThree : function(req,res){
+    logoutUser : function(req,res){
         req.session.destroy(function(err) {
            res.redirect('/login');
       });
